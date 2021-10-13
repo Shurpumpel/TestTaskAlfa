@@ -1,8 +1,10 @@
 const general_url = './';
 
 function getResultGif() {
+
+    let select = document.querySelector("#select-code").selectedOptions[0].value;
     $.ajax({
-        url: general_url + 'gif/',
+        url: general_url + 'gif/' + select,
         method: 'GET',
         dataType: "json",
         complete: function (data) {
@@ -11,18 +13,18 @@ function getResultGif() {
             let img = document.createElement("img");
             let fc = document.createElement("figcaption");
             let tg = document.createElement("typegif");
-            let cur = document.createElement("currency");
+            let coeff = document.createElement("coefficient");
 
-            img.src = content.data.images.original.url;
-            img.alt = content.data.title;
-            fc.textContent = content.data.title;
-            tg.textContent = content.typegif+"\n";
-            cur.textContent = content.currency+"\n";
+            img.src = content.urlGif;
+            img.alt = content.searchTag;
+            fc.textContent = content.searchTag;
+            tg.textContent = content.title+"\n";
+            coeff.textContent = content.coefficient+"\n";
 
             fig.appendChild(img);
             fig.appendChild(fc);
             fig.appendChild(tg);
-            fig.appendChild(cur);
+            fig.appendChild(coeff);
 
             let out = document.querySelector("#out");
             out.innerHTML = "";

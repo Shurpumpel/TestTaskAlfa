@@ -12,7 +12,7 @@ public interface ExchangeRatesService {
 
     OpenExchangeRates getHistoricalExchangeRates(String date);
 
-    OpenExchangeRates getCurrencies();
+    ResponseEntity<Map> getCurrencies();
 
     String getCoefficient(String charCode);
 }

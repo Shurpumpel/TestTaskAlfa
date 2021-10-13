@@ -1,9 +1,10 @@
 package com.example.testtaskalfa.service.gif_service;
 
+import com.example.testtaskalfa.entity.giphy.Giphy;
 import org.springframework.http.ResponseEntity;
 
 import java.util.Map;
 
 public interface GifService {
-    ResponseEntity<Map> getGifs(String tag);
+    Giphy getGifs(String tag);
 }

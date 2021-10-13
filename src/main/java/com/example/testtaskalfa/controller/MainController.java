@@ -1,12 +1,13 @@
 package com.example.testtaskalfa.controller;
 
+import com.example.testtaskalfa.dto.OutDTO;
+import com.example.testtaskalfa.entity.giphy.Giphy;
 import com.example.testtaskalfa.entity.open_exchange_rates.OpenExchangeRates;
 import com.example.testtaskalfa.service.exchange_rates_service.ExchangeRatesService;
 import com.example.testtaskalfa.service.gif_service.GifService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -19,11 +20,10 @@ public class MainController {
     @Autowired
     private ExchangeRatesService exchangeRatesService;
 
-    @GetMapping("/gif")
-    public ResponseEntity<Map> getGif() {
-        ResponseEntity<Map> response = gifService.getGifs("broke");
-        response.getBody().put("coefficient", exchangeRatesService.getCoefficient("RUB"));
-        return response;
+    @GetMapping("/gif/{currency}")
+    public OutDTO getGif(@PathVariable String currency) {
+        Giphy gif = gifService.getGifs("rich");
+        return OutDTO.fromModel(gif, exchangeRatesService.getCoefficient(currency));
     }
 
     @GetMapping("/rates")
@@ -32,7 +32,7 @@ public class MainController {
     }
 
     @GetMapping("/currencies")
-    public OpenExchangeRates getCurrencies(){
+    public ResponseEntity<Map> getCurrencies(){
         return exchangeRatesService.getCurrencies();
     }
 }

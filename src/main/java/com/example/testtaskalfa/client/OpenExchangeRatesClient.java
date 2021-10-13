@@ -26,5 +26,5 @@ public interface OpenExchangeRatesClient {
     );
 
     @GetMapping("/currencies.json")
-    OpenExchangeRates getCurrencies();
+    ResponseEntity<Map> getCurrencies();
 }

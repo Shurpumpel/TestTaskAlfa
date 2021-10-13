@@ -11,7 +11,7 @@ import java.util.Map;
 public interface GifClient {
 
     @GetMapping("/random")
-    public ResponseEntity<Map> getGif(
+    ResponseEntity<Map> getGif(
             @RequestParam ("api_key") String apiKey,
             @RequestParam ("tag") String tag
     );

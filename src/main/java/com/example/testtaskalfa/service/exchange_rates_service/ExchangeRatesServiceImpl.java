@@ -31,7 +31,7 @@ public class ExchangeRatesServiceImpl implements ExchangeRatesService {
     }
 
     @Override
-    public OpenExchangeRates getCurrencies() {
+    public ResponseEntity<Map> getCurrencies() {
         return openExchangeRatesClient.getCurrencies();
     }
 
