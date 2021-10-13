@@ -17,6 +17,6 @@ public class OpenExchangeRates {
     private String license;
     private String timestamp;
     private String base;
-    private Map<String, String> rates;
+    private Map<String, Double> rates;
 
 }

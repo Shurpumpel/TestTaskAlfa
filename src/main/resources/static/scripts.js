@@ -14,16 +14,20 @@ function getResultGif() {
             let fc = document.createElement("figcaption");
             let tg = document.createElement("typegif");
             let coeff = document.createElement("coefficient");
+            let br = document.createElement("br");
 
             img.src = content.urlGif;
-            img.alt = content.searchTag;
-            fc.textContent = content.searchTag;
+            fc.textContent = content.searchTag+"\n";
             tg.textContent = content.title+"\n";
-            coeff.textContent = content.coefficient+"\n";
+            coeff.textContent = "today: "+content.coefficient+"\n";
+
 
             fig.appendChild(img);
+            fig.append(br);
             fig.appendChild(fc);
+            fig.append(br);
             fig.appendChild(tg);
+            fig.append(br);
             fig.appendChild(coeff);
 
             let out = document.querySelector("#out");

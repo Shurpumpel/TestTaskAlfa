@@ -11,9 +11,9 @@ public class OutDTO {
     private String urlGif;
     private String title;
     private String searchTag;
-    private String coefficient;
+    private Double coefficient;
 
-    public static OutDTO fromModel(Giphy gif, String coefficient){
+    public static OutDTO fromModel(Giphy gif, Double coefficient){
         OutDTO outDTO = new OutDTO();
         outDTO.setUrlGif(gif.getUrlGif());
         outDTO.setTitle(gif.getTitle());

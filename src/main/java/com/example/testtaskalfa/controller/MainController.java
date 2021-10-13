@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Map;
 
 
@@ -22,8 +25,18 @@ public class MainController {
 
     @GetMapping("/gif/{currency}")
     public OutDTO getGif(@PathVariable String currency) {
-        Giphy gif = gifService.getGifs("rich");
+        Giphy gif = null;
+        if (isTodayCoefficientBetter(currency))
+            gif = gifService.getGifs("rich");
+        else
+            gif = gifService.getGifs("broke");
         return OutDTO.fromModel(gif, exchangeRatesService.getCoefficient(currency));
+    }
+
+    private boolean isTodayCoefficientBetter(String currency) {
+        OpenExchangeRates yesterday = getYesterdayExchangeRates();
+        OpenExchangeRates today = getLatestExchangeRates();
+        return today.getRates().get(currency) > yesterday.getRates().get(currency);
     }
 
     @GetMapping("/rates")
@@ -32,7 +45,16 @@ public class MainController {
     }
 
     @GetMapping("/currencies")
-    public ResponseEntity<Map> getCurrencies(){
+    public ResponseEntity<Map> getCurrencies() {
         return exchangeRatesService.getCurrencies();
+    }
+
+    @GetMapping("/yesterday")
+    public OpenExchangeRates getYesterdayExchangeRates() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.roll(Calendar.DAY_OF_MONTH, -1);
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        return exchangeRatesService.getHistoricalExchangeRates(dateFormat.format(calendar.getTime()));
     }
 }

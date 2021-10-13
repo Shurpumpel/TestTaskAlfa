@@ -27,7 +27,7 @@ public class ExchangeRatesServiceImpl implements ExchangeRatesService {
 
     @Override
     public OpenExchangeRates getHistoricalExchangeRates(String date) {
-        return null;
+        return openExchangeRatesClient.getHistoricalExchangeRate(date, this.appId, this.base);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class ExchangeRatesServiceImpl implements ExchangeRatesService {
         return openExchangeRatesClient.getCurrencies();
     }
 
-    public String getCoefficient(String charCode) {
+    public Double getCoefficient(String charCode) {
         OpenExchangeRates openExchangeRates = getLatestExchangeRates();
         return openExchangeRates.getRates().get(charCode);
     }
