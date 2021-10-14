@@ -22,12 +22,9 @@ function getResultGif() {
             coeff.textContent = "today: "+content.coefficient+"\n";
 
 
-            fig.appendChild(img);
-            fig.append(br);
-            fig.appendChild(fc);
-            fig.append(br);
-            fig.appendChild(tg);
-            fig.append(br);
+            fig.appendChild(img); fig.append(br);
+            fig.appendChild(fc); fig.append(br);
+            fig.appendChild(tg); fig.append(br);
             fig.appendChild(coeff);
 
             let out = document.querySelector("#out");

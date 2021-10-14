@@ -6,6 +6,7 @@ import com.example.testtaskalfa.entity.open_exchange_rates.OpenExchangeRates;
 import com.example.testtaskalfa.service.exchange_rates_service.ExchangeRatesService;
 import com.example.testtaskalfa.service.gif_service.GifService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,21 +23,25 @@ public class MainController {
     private GifService gifService;
     @Autowired
     private ExchangeRatesService exchangeRatesService;
+    @Value("${giphy.tag.rich}")
+    private String rich;
+    @Value("${giphy.tag.broke}")
+    private String broke;
 
     @GetMapping("/gif/{currency}")
     public OutDTO getGif(@PathVariable String currency) {
         Giphy gif = null;
         if (isTodayCoefficientBetter(currency))
-            gif = gifService.getGifs("rich");
+            gif = gifService.getGifs(this.rich);
         else
-            gif = gifService.getGifs("broke");
+            gif = gifService.getGifs(this.broke);
         return OutDTO.fromModel(gif, exchangeRatesService.getCoefficient(currency));
     }
 
     private boolean isTodayCoefficientBetter(String currency) {
         OpenExchangeRates yesterday = getYesterdayExchangeRates();
         OpenExchangeRates today = getLatestExchangeRates();
-        return today.getRates().get(currency) > yesterday.getRates().get(currency);
+        return today.getRates().get(currency) < yesterday.getRates().get(currency);
     }
 
     @GetMapping("/rates")
